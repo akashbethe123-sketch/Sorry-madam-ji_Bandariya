@@ -1,358 +1,94 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chakravyuh Link 😄</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Secret Message 💖</title>
 
-  <style>
-    :root{
-      --bg1:#0b0f1a;
-      --bg2:#120b2b;
-      --card:rgba(255,255,255,0.06);
-      --stroke:rgba(255,255,255,0.12);
-      --text:#f4f4ff;
-      --muted:rgba(244,244,255,0.75);
-      --btn:#ffffff;
-      --btnText:#0b0f1a;
-    }
+<style>
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(45deg,#ff6ec4,#7873f5);
+  color: white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
 
-    *{box-sizing:border-box;}
-    body{
-      margin:0;
-      min-height:100vh;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(1000px 600px at 20% 10%, rgba(255, 0, 120, 0.22), transparent 55%),
-        radial-gradient(900px 500px at 80% 20%, rgba(0, 255, 200, 0.18), transparent 60%),
-        radial-gradient(900px 700px at 50% 90%, rgba(120, 90, 255, 0.22), transparent 60%),
-        linear-gradient(135deg, var(--bg1), var(--bg2));
-      overflow:hidden;
-    }
+.box {
+  background: rgba(255,255,255,0.1);
+  padding: 25px;
+  border-radius: 20px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+}
 
-    /* floating particles */
-    .particle{
-      position:fixed;
-      width:10px; height:10px;
-      border-radius:50%;
-      opacity:0.35;
-      filter: blur(0.2px);
-      animation: floatUp linear infinite;
-      pointer-events:none;
-    }
-    @keyframes floatUp{
-      from{ transform: translateY(120vh) translateX(0) scale(0.9); }
-      to{ transform: translateY(-20vh) translateX(80px) scale(1.2); }
-    }
+input {
+  padding:10px;
+  border-radius:10px;
+  border:none;
+  margin-top:10px;
+}
 
-    .wrap{
-      min-height:100vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:22px;
-      position:relative;
-      z-index:5;
-    }
+button {
+  margin-top:10px;
+  padding:10px 20px;
+  border:none;
+  border-radius:20px;
+  cursor:pointer;
+}
 
-    .card{
-      width:min(720px, 96vw);
-      background:var(--card);
-      border:1px solid var(--stroke);
-      border-radius:22px;
-      padding:22px 18px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
-      backdrop-filter: blur(10px);
-    }
-
-    .title{
-      font-size:22px;
-      font-weight:800;
-      letter-spacing:0.2px;
-      margin:0 0 8px 0;
-      text-align:center;
-    }
-
-    .subtitle{
-      margin:0 0 14px 0;
-      text-align:center;
-      color:var(--muted);
-      font-size:14px;
-    }
-
-    .screen{
-      background: rgba(0,0,0,0.25);
-      border:1px solid rgba(255,255,255,0.10);
-      border-radius:18px;
-      padding:18px;
-      min-height:220px;
-      position:relative;
-      overflow:hidden;
-    }
-
-    .typing{
-      font-size:18px;
-      line-height:1.5;
-      margin:0;
-      white-space:pre-wrap;
-    }
-
-    .cursor{
-      display:inline-block;
-      width:10px;
-      height:18px;
-      background:rgba(255,255,255,0.7);
-      margin-left:6px;
-      border-radius:3px;
-      animation: blink 0.8s infinite;
-      vertical-align:middle;
-    }
-    @keyframes blink{ 0%,49%{opacity:1;} 50%,100%{opacity:0;} }
-
-    .btnRow{
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
-      justify-content:center;
-      margin-top:16px;
-    }
-
-    button{
-      border:none;
-      border-radius:16px;
-      padding:12px 16px;
-      font-weight:800;
-      cursor:pointer;
-      transition: transform 0.15s ease, opacity 0.15s ease;
-      font-size:15px;
-    }
-    button:hover{ transform: translateY(-2px); }
-    button:active{ transform: translateY(1px) scale(0.98); }
-
-    .yes{
-      background: var(--btn);
-      color: var(--btnText);
-      box-shadow: 0 10px 30px rgba(255,255,255,0.12);
-    }
-
-    .no{
-      background: rgba(255,255,255,0.10);
-      color: var(--text);
-      border:1px solid rgba(255,255,255,0.18);
-      position:relative;
-    }
-
-    .badge{
-      display:inline-block;
-      font-size:12px;
-      padding:6px 10px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,0.14);
-      color:rgba(255,255,255,0.85);
-      margin:0 auto 12px auto;
-      text-align:center;
-      width:fit-content;
-      background: rgba(255,255,255,0.06);
-    }
-
-    .footer{
-      text-align:center;
-      margin-top:14px;
-      color:rgba(255,255,255,0.55);
-      font-size:12px;
-    }
-
-    /* confetti */
-    .confetti{
-      position:fixed;
-      width:10px;
-      height:14px;
-      top:-20px;
-      border-radius:3px;
-      opacity:0.9;
-      animation: fall linear forwards;
-      pointer-events:none;
-      z-index:10;
-    }
-    @keyframes fall{
-      to{
-        transform: translateY(120vh) rotate(720deg);
-        opacity: 0.95;
-      }
-    }
-
-    /* little heart pop */
-    .pop{
-      position:fixed;
-      font-size:18px;
-      animation: pop 1.2s ease forwards;
-      pointer-events:none;
-      z-index:12;
-    }
-    @keyframes pop{
-      0%{ transform: translateY(0) scale(0.7); opacity:0; }
-      25%{ opacity:1; }
-      100%{ transform: translateY(-120px) scale(1.3); opacity:0; }
-    }
-  </style>
+#msg {
+  margin-top:20px;
+  font-size:18px;
+  line-height:1.6;
+}
+</style>
 </head>
 
 <body>
 
-  <div class="wrap">
-    <div class="card">
-      <div class="badge">⚡ Welcome to Chakravyuh Mode 😄</div>
-      <h1 class="title">Choose wisely madam ji 😌✨</h1>
-      <p class="subtitle">Do options hain… par dono me fun guaranteed 😭❤️</p>
+<div class="box">
+  <h2>🔐 Enter Secret Code</h2>
+  <input type="text" id="code" placeholder="Enter here..." />
+  <br>
+  <button onclick="checkCode()">Unlock</button>
 
-      <div class="screen">
-        <p id="typing" class="typing"></p><span class="cursor"></span>
+  <div id="msg"></div>
+</div>
 
-        <div class="btnRow" id="buttons" style="display:none;">
-          <button class="yes" id="btnYes">Option 1: Haan 😌❤️</button>
-          <button class="no" id="btnNo">Option 2: Nahi 😭</button>
-        </div>
-      </div>
+<script>
+const secret = "madam"; // 🔥 Yaha code change kar sakte ho
 
-      <div class="footer">Made with 😄 + 🤍 by Akash</div>
-    </div>
-  </div>
+const text = `Kal jab maine aapka shaadi wala pic dekha na... 💘🔥
 
-  <script>
-    // ======= Floating particles background =======
-    function spawnParticles(){
-      for(let i=0;i<18;i++){
-        const p=document.createElement("div");
-        p.className="particle";
-        const size= 6 + Math.random()*14;
-        p.style.width=size+"px";
-        p.style.height=size+"px";
-        p.style.left=(Math.random()*100)+"vw";
-        p.style.animationDuration=(7+Math.random()*10)+"s";
-        p.style.animationDelay=(Math.random()*3)+"s";
-        p.style.background = `rgba(${Math.floor(120+Math.random()*135)}, ${Math.floor(90+Math.random()*165)}, ${Math.floor(150+Math.random()*105)}, 0.45)`;
-        document.body.appendChild(p);
-      }
-    }
-    spawnParticles();
+Kasam se aisa laga jaise aapne mere dil ka hi katal kar diya ho...
 
-    // ======= Typing animation =======
-    const typingEl = document.getElementById("typing");
-    const buttons = document.getElementById("buttons");
+Sachi me Madam ji mere paas words hi nahi mile 🙂
 
-    const scenes = [
-      "Madam ji… 😅\n\nMain bas ek chhoti si request leke aaya hoon…\n\n✨ Kya hum phir se wahi purani wali senior-junior bonding rakhen?\n\n(Yes = cute ending)\n(No = chakravyuh start 😭)",
-      "Awww 😭❤️\n\nAapne YES dabaya…\n\nMain sach me wahi simple aur real bonding chahta hoon.\n\nNo drama… bas respect + care + thoda sa pyaar 😌✨",
-      "Ohh… NO? 😭\n\nTheek hai…\n\nPar ab aap Chakravyuh me enter kar chuki ho 😈⚡\n\nAage 2 aur options aayenge…"
-    ];
+Bas aisa laga jaise main kuch der ke liye ek alag hi duniya me kho gaya hun ✨😊`;
 
-    let current = 0;
+function checkCode(){
+  let userInput = document.getElementById("code").value.toLowerCase();
 
-    function typeText(text, speed=22){
-      typingEl.textContent = "";
-      buttons.style.display = "none";
-      let i=0;
-      const timer = setInterval(()=>{
-        typingEl.textContent += text[i];
-        i++;
-        if(i>=text.length){
-          clearInterval(timer);
-          setTimeout(()=> buttons.style.display = "flex", 350);
-        }
-      }, speed);
-    }
+  if(userInput === secret){
+    typeWriter();
+  } else {
+    document.getElementById("msg").innerHTML = "❌ Wrong code... try again!";
+  }
+}
 
-    typeText(scenes[0]);
-
-    // ======= Confetti + Heart Pop =======
-    function confettiBlast(){
-      for(let i=0;i<45;i++){
-        const c=document.createElement("div");
-        c.className="confetti";
-        c.style.left=(Math.random()*100)+"vw";
-        c.style.animationDuration=(1.8+Math.random()*1.6)+"s";
-        c.style.transform=`rotate(${Math.random()*360}deg)`;
-        c.style.background = `hsl(${Math.floor(Math.random()*360)}, 90%, 70%)`;
-        document.body.appendChild(c);
-        setTimeout(()=>c.remove(), 3500);
-      }
-    }
-
-    function heartPop(x,y){
-      const hearts = ["❤️","💖","✨","🥺","😄","🤍","💫"];
-      const h=document.createElement("div");
-      h.className="pop";
-      h.textContent = hearts[Math.floor(Math.random()*hearts.length)];
-      h.style.left = x+"px";
-      h.style.top = y+"px";
-      document.body.appendChild(h);
-      setTimeout(()=>h.remove(), 1200);
-    }
-
-    // ======= Buttons logic =======
-    const btnYes = document.getElementById("btnYes");
-    const btnNo  = document.getElementById("btnNo");
-
-    let noMoves = 0;
-
-    btnYes.addEventListener("click", (e)=>{
-      heartPop(e.clientX, e.clientY);
-      confettiBlast();
-      current = 1;
-      typeText(scenes[1], 18);
-
-      // After yes, turn into final message
-      setTimeout(()=>{
-        btnYes.textContent = "Final: Send this link 😌❤️";
-        btnNo.style.display="none";
-      }, 1200);
-    });
-
-    btnNo.addEventListener("mouseover", ()=>{
-      // make No button dodge
-      noMoves++;
-      if(noMoves <= 8){
-        const x = (Math.random()*220) - 110;
-        const y = (Math.random()*90) - 45;
-        btnNo.style.transform = `translate(${x}px, ${y}px)`;
-      }
-    });
-
-    btnNo.addEventListener("click", (e)=>{
-      heartPop(e.clientX, e.clientY);
-      current = 2;
-      typeText(scenes[2], 20);
-
-      // After NO, convert into 2 new options (chakravyuh)
-      setTimeout(()=>{
-        btnYes.textContent = "Option A: Ek chance 😌";
-        btnNo.textContent  = "Option B: Direct ignore 😭";
-        btnNo.style.transform = "translate(0,0)";
-        btnNo.style.display="inline-block";
-      }, 1200);
-    });
-
-    // Chakravyuh second stage
-    btnYes.addEventListener("dblclick", ()=>{
-      confettiBlast();
-      typingEl.textContent =
-        "🔥 Chakravyuh ka secret unlock!\n\n" +
-        "Madam ji… aapne double tap kiya 😭❤️\n\n" +
-        "Final answer:\n" +
-        "Main bas aapko respect karta hoon…\n" +
-        "Aur wahi bonding wapas chahta hoon 😌✨\n\n" +
-        "🤍 Thank you for reading.";
-      buttons.style.display="none";
-    });
-
-    // click anywhere = heart pop
-    document.addEventListener("click",(e)=>{
-      if(e.target.tagName !== "BUTTON"){
-        heartPop(e.clientX, e.clientY);
-      }
-    });
-  </script>
+let i = 0;
+function typeWriter(){
+  if(i < text.length){
+    document.getElementById("msg").innerHTML += text.charAt(i);
+    i++;
+    setTimeout(typeWriter, 40);
+  }
+}
+</script>
 
 </body>
-          </html>
+</html>
